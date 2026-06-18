@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Noor & Knot — Delhi's Luxury Bridal Beauty Marketplace</title>
+<meta name="description" content="AI-powered bridal beauty marketplace for Delhi brides."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:auto}
+body{background:#060104;color:#FFF9F6;font-family:'Cormorant Garamond',Georgia,serif;overflow-x:hidden}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:#D4AF37}
+.pf{font-family:'Playfair Display',serif}
+
+/* PAGE TRANSITION PANELS */
+#ov{position:fixed;inset:0;z-index:9999;display:grid;grid-template-columns:repeat(4,1fr);pointer-events:none}
+.ovp{background:#060104;transform:scaleY(0);transform-origin:bottom;will-change:transform}
+
+/* GSAP WORD SPLIT */
+.word-wrap{display:inline-block;overflow:hidden;vertical-align:bottom;line-height:1.1}
+.word-inner{display:inline-block;transform:translateY(110%)}
+
+/* ANIMATIONS */
+@keyframes floatUp{0%{transform:translateY(0) rotate(0);opacity:0}8%{opacity:.85}85%{opacity:.3}100%{transform:translateY(-110vh) rotate(400deg);opacity:0}}
+@keyframes goldShimmer{0%{background-position:0%}100%{background-position:200%}}
+@keyframes marqueeScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes pulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:1;transform:scale(1.4)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 24px rgba(212,175,55,.15)}50%{box-shadow:0 0 52px rgba(212,175,55,.5)}}
+@keyframes msgIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes countUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* GOLD TEXT */
+.gold-text{background:linear-gradient(90deg,#9A7209,#D4AF37,#F0CC5A,#D4AF37,#9A7209);background-size:250% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:goldShimmer 5s linear infinite}
+
+/* PARTICLES */
+.pt{position:absolute;border-radius:50%;background:#D4AF37;pointer-events:none;animation:floatUp linear infinite}
+
+/* BUTTONS */
+.btn{border:none;cursor:pointer;font-family:'Cormorant Garamond',serif;font-weight:500;letter-spacing:1px;transition:all .3s cubic-bezier(.16,1,.3,1);display:inline-flex;align-items:center;gap:8px}
+.btn:hover{transform:translateY(-2px)}
+.btn-wine{background:#7B1E3D;color:#FFF9F6;box-shadow:0 6px 28px rgba(123,30,61,.4)}
+.btn-wine:hover{background:#9B2E57;box-shadow:0 12px 40px rgba(123,30,61,.6)}
+.btn-ghost{background:transparent;color:#D4AF37;border:1px solid rgba(212,175,55,.35)}
+.btn-ghost:hover{border-color:rgba(212,175,55,.8);background:rgba(212,175,55,.06)}
+
+/* GLASS */
+.glass{background:rgba(18,4,10,.8);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(212,175,55,.15);border-radius:16px}
+
+/* NAV */
+.nk-nav{display:flex;justify-content:space-between;align-items:center;padding:22px 40px;position:fixed;top:0;left:0;right:0;z-index:500;transition:background .4s,border-color .4s;opacity:0}
+.nk-nav.scrolled{background:rgba(6,1,4,.92);border-bottom:1px solid rgba(212,175,55,.09);backdrop-filter:blur(20px)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:20px;color:#D4AF37;cursor:pointer;letter-spacing:3px;user-select:none}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-link{font-size:14px;color:rgba(255,249,246,.45);cursor:pointer;letter-spacing:.8px;transition:color .2s;border:none;background:transparent;font-family:'Cormorant Garamond',serif}
+.nav-link:hover{color:#D4AF37}
+
+/* CARDS */
+.s-card{background:rgba(15,4,8,.95);border:1px solid rgba(212,175,55,.15);border-radius:14px;overflow:hidden;cursor:pointer;transition:border-color .35s ease,box-shadow .35s ease;flex-shrink:0}
+.s-card:hover{border-color:rgba(212,175,55,.55);box-shadow:0 20px 56px rgba(212,175,55,.1)}
+
+/* CHAT */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 64px)}
+#chat-msgs{flex:1;overflow-y:auto;padding:28px 24px;scroll-behavior:smooth}
+#chat-msgs::-webkit-scrollbar{width:2px}
+#chat-msgs::-webkit-scrollbar-thumb{background:rgba(212,175,55,.3)}
+.msg-in{animation:msgIn .4s ease both}
+
+/* DIVIDER */
+.gold-line{height:1px;background:linear-gradient(to right,transparent,#D4AF37,transparent)}
+
+/* INPUTS */
+.nk-input{width:100%;padding:12px 0;border:none;border-bottom:1px solid rgba(212,175,55,.2);background:transparent;font-family:'Cormorant Garamond',serif;font-size:17px;color:#FFF9F6;outline:none;transition:border-color .25s}
+.nk-input:focus{border-bottom-color:#D4AF37}
+.nk-input option{background:#150308}
+
+/* MARQUEE */
+.marquee-inner{display:flex;white-space:nowrap;animation:marqueeScroll 22s linear infinite;font-size:13px;letter-spacing:3px;color:#E8C76A;
+  text-shadow:0 0 6px rgba(232,199,106,0.15);font-family:'Cormorant Garamond',serif}
+.marquee-inner:hover{animation-play-state:paused}
+
+/* HORIZONTAL SCROLL */
+#salon-carousel{overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;padding:0 40px}
+#salon-carousel::-webkit-scrollbar{display:none}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .nk-nav{padding:18px 20px}
+  .desktop-only{display:none!important}
+  #salon-carousel{padding:0 16px}
+  .stats-row{grid-template-columns:1fr 1fr!important}
+  .how-grid{grid-template-columns:1fr 1fr!important}
+  .noor-grid{grid-template-columns:1fr!important}
+  .test-grid{grid-template-columns:1fr!important}
+  .salon-grid{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:480px){
+  .how-grid{grid-template-columns:1fr!important}
+  .salon-grid{grid-template-columns:1fr!important}
+}
+/* CUSTOM CURSOR */
+@media(pointer:fine){
+  *{cursor:none!important}
+
+  #cursor-dot{
+    width:6px;height:6px;
+    background:#D4AF37;
+    border-radius:50%;
+    position:fixed;top:0;left:0;
+    pointer-events:none;
+    z-index:999999;
+    transform:translate(-50%,-50%);
+    transition:transform .15s ease,opacity .3s ease,background .3s ease;
+    will-change:left,top;
+  }
+
+  #cursor-ring{
+    width:38px;height:38px;
+    border:1px solid rgba(212,175,55,.55);
+    border-radius:50%;
+    position:fixed;top:0;left:0;
+    pointer-events:none;
+    z-index:999998;
+    transform:translate(-50%,-50%);
+    transition:width .4s cubic-bezier(.16,1,.3,1),
+               height .4s cubic-bezier(.16,1,.3,1),
+               border-color .3s ease,
+               background .3s ease,
+               opacity .3s ease;
+    will-change:left,top;
+  }
+
+  #cursor-ring.expanded{
+    width:64px;height:64px;
+    background:rgba(212,175,55,.07);
+    border-color:rgba(212,175,55,.9);
+  }
+
+  #cursor-ring.clicking{
+    width:28px;height:28px;
+    background:rgba(212,175,55,.15);
+  }
+}
+/* DOME TRANSITION */
+#dome{
+  position:fixed;
+  left:50%;
+  bottom:-220vw;
+
+  width:220vw;
+  height:220vw;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #12040A 0%,
+      #060104 70%
+    );
+
+  transform:translateX(-50%);
+
+  z-index:99999;
+
+  pointer-events:none;
+
+  box-shadow:
+      0 -20px 100px rgba(212,175,55,.15),
+      0 -5px 40px rgba(212,175,55,.12);
+}
+
+/* VIDEO BACKGROUND */
+#bg-video{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:0;
+    opacity:0.2;
+}
+
+.video-overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(6,1,4,0.35);
+    z-index:1;
+}
+</style>
+</head>
+<body>
+  <div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- PAGE TRANSITION OVERLAY -->
+<div id="ov">
+  <div class="ovp"></div><div class="ovp"></div>
+  <div class="ovp"></div><div class="ovp"></div>
+</div>
+
+<div id="dome"></div>
+<!-- APP -->
+<div id="nk"></div>
+
+<script>
+
+gsap.registerPlugin(ScrollTrigger);
+const G='#D4AF37',W='#7B1E3D',IV='#FFF9F6';
+
+
+  /* ── DATA ── */
+const SALONS=[
+  {id:1,name:'Jean-Claude Biguine',area:'South Extension',spec:'French Luxury Bridal',price:'₹85,000–₹1,50,000',rating:4.8,rev:124,a:'#8B6914',b:'#4A0E20'},
+  {id:2,name:'Lakmé Salon',area:'Hauz Khas',spec:'HD Airbrush Bridal',price:'₹45,000–₹80,000',rating:4.6,rev:89,a:'#3D1060',b:'#7B1E3D'},
+  {id:3,name:'Studio 11',area:'Greater Kailash',spec:'Editorial Bridal',price:'₹90,000–₹1,80,000',rating:4.9,rev:203,a:'#7B1E3D',b:'#8B6914'},
+  {id:4,name:'VLCC Wellness',area:'Saket',spec:'Complete Package',price:'₹35,000–₹65,000',rating:4.5,rev:156,a:'#6B2D00',b:'#7B1E3D'},
+  {id:5,name:'Naturals Salon',area:'Lajpat Nagar',spec:'South Indian Bridal',price:'₹30,000–₹55,000',rating:4.4,rev:98,a:'#0A3D2B',b:'#8B6914'},
+  {id:6,name:'Enrich Salon',area:'Punjabi Bagh',spec:'Celebrity Style',price:'₹70,000–₹1,20,000',rating:4.7,rev:178,a:'#7B1E3D',b:'#4A0E20'},
+  {id:7,name:'Geetanjali Salon',area:'Connaught Place',spec:'Luxury Bridal Makeup',price:'₹60,000–₹1,10,000',rating:4.8,rev:210,a:'#8B6914',b:'#6B0F25'},
+  {id:8,name:'Looks Salon',area:'Rajouri Garden',spec:'HD Bridal Glam',price:'₹40,000–₹75,000',rating:4.5,rev:150,a:'#3D1060',b:'#7B1E3D'},
+  {id:9,name:'BBlunt Salon',area:'Vasant Kunj',spec:'Modern Bridal Styling',price:'₹55,000–₹95,000',rating:4.7,rev:175,a:'#6B2D00',b:'#4A0E20'},
+  {id:10,name:'Affinity Salon',area:'Defence Colony',spec:'Luxury Bridal Package',price:'₹80,000–₹1,40,000',rating:4.9,rev:240,a:'#7B1E3D',b:'#8B6914'},
+  {id:11,name:'Toni & Guy',area:'Green Park',spec:'International Bridal Look',price:'₹65,000–₹1,25,000',rating:4.8,rev:198,a:'#0A3D2B',b:'#8B6914'},
+  {id:12,name:'Jawed Habib',area:'Janakpuri',spec:'Classic Bridal Makeup',price:'₹35,000–₹70,000',rating:4.4,rev:165,a:'#4A0E20',b:'#7B1E3D'},
+];
+
+
+/* ── STATE ── */
+let ST={page:'landing',msgs:[],typing:false,salon:SALONS[0],booked:false};
+
+/* ── DEMO RESPONSES ── */
+const DEMO=[
+  {k:['budget','cheap','affordable','30k','40k','50k','20k','35k'],t:"For a breathtaking bridal look under ₹50k, VLCC in Saket and Naturals in Lajpat Nagar are my top picks — full packages, no compromise on artistry.",s:[4,5]},
+  {k:['1 lakh','2 lakh','luxury','best','premium','top','finest','high end'],t:"For the absolute finest bridal experience in Delhi, these two studios are in a league of their own — Jean-Claude Biguine for Parisian luxury, Studio 11 for editorial perfection.",s:[1,3]},
+  {k:['airbrush','hd','modern','dewy','glow','fresh','natural','minimal'],t:"For a luminous HD airbrush finish that photographs beautifully and holds from mandap to midnight — Lakmé Salon in Hauz Khas is my first recommendation.",s:[2]},
+  {k:['traditional','royal','mughal','classic','heritage','temple'],t:"For a rich traditional look — jewel tones, elaborate eye work, artistry that honours Indian heritage — Jean-Claude Biguine and Enrich Salon are your finest choices.",s:[1,6]},
+  {k:['celebrity','bold','glam','bollywood','editorial','dramatic'],t:"For that bold Bollywood-inspired bridal look, Enrich Salon in Punjabi Bagh is your answer. High-impact, glamorous, utterly stunning.",s:[6,3]},
+  {k:['south indian','tamil','bengali','marathi','regional'],t:"For authentic regional bridal artistry, Naturals in Lajpat Nagar specialises in South Indian looks with beautiful results.",s:[5,1]},
+  {k:['90 days','60 days','30 days','timeline','schedule','prepare','when','routine'],t:"Your countdown: 90 days — begin vitamin C + SPF daily. 60 days — hair spa and skin consultation. 30 days — full makeup trial with photographer. 7 days — relaxing facial only. Wedding morning — face massage, primer 30 mins before makeup.",s:[]},
+  {k:['skin','wheatish','fair','dusky','deep','tone','oily','dry','acne','complexion'],t:"Your skin tone is a beautiful canvas. The key is finding an artist who enhances rather than masks. A full trial at least 30 days before is essential.",s:[1,2]},
+  {k:['outdoor','garden','destination','farm','beach'],t:"Outdoor weddings need long-wear photography-optimised formulas. Lakmé and Studio 11 both specialise in bases built for daylight.",s:[2,3]},
+  {k:['package','includes','service','mehendi','hair','facial'],t:"A full bridal package covers: trial session, pre-bridal facial, bridal makeup, hairstyling, and touch-up kit. Prices range from ₹35k at VLCC to ₹1.5L+ at Studio 11.",s:[4,1,3]},
+];
+function demoReply(txt){
+  const t=txt.toLowerCase();
+  for(const d of DEMO) if(d.k.some(k=>t.includes(k))) return{text:d.t,salons:d.s.map(id=>SALONS[id-1]).filter(Boolean)};
+  return{text:"Tell me about your wedding — venue, date, budget, and the look you're dreaming of. I know every salon in Delhi personally.",salons:SALONS.slice(0,3)};
+}
+
+/* ── HELPERS ── */
+function stars(n){return Array.from({length:5},(_,i)=>`<span style="color:${i<Math.floor(n)?G:'#2a1020'};font-size:12px">★</span>`).join('')}
+
+function pts(n=18){
+  return Array.from({length:n},()=>{
+    const sz=Math.random()*4+1.5;
+    return`<div class="pt" style="width:${sz}px;height:${sz}px;left:${Math.random()*100}%;bottom:0;opacity:${.3+Math.random()*.6};animation-duration:${10+Math.random()*14}s;animation-delay:${Math.random()*12}s"></div>`;
+  }).join('');
+}
+
+function mandala(){
+  const lines=Array.from({length:16},(_,i)=>{const a=i*(Math.PI/8);return`<line x1="${250+130*Math.cos(a)}" y1="${250+130*Math.sin(a)}" x2="${250+230*Math.cos(a)}" y2="${250+230*Math.sin(a)}" stroke="${G}" stroke-width=".3"/>`}).join('');
+  const dots=Array.from({length:8},(_,i)=>{const a=i*(Math.PI/4);return`<circle cx="${250+180*Math.cos(a)}" cy="${250+180*Math.sin(a)}" r="4" stroke="${G}" stroke-width=".6" fill="none"/>`}).join('');
+  return`<svg id="hero-mandala" viewBox="0 0 500 500" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(85%,640px);opacity:.055;pointer-events:none" fill="none"><circle cx="250" cy="250" r="228" stroke="${G}" stroke-width=".6"/><circle cx="250" cy="250" r="178" stroke="${G}" stroke-width=".4"/><circle cx="250" cy="250" r="128" stroke="${G}" stroke-width=".4"/><circle cx="250" cy="250" r="18" stroke="${G}" stroke-width=".8"/>${lines}${dots}</svg>`;
+}
+
+function sCard(s,w='280px'){
+  return`<div class="s-card" style="width:${w};min-width:${w}" onclick="goSalon(${s.id})">
+    <div style="height:160px;background:linear-gradient(135deg,${s.a},${s.b});position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:16px">
+      <div style="position:absolute;inset:0;background:rgba(0,0,0,.35)"></div>
+      <div style="position:relative">
+        <div style="font-size:11px;letter-spacing:2px;color:rgba(212,175,55,.7);margin-bottom:4px">${s.area.toUpperCase()}</div>
+        <div class="pf" style="font-size:18px;color:#fff;font-style:italic;line-height:1.2">${s.name}</div>
+      </div>
+    </div>
+    <div style="padding:16px">
+      <div style="font-size:12px;color:rgba(255,249,246,.4);margin-bottom:8px">${s.spec}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div>${stars(s.rating)}<span style="font-size:11px;color:rgba(255,249,246,.3);margin-left:6px">${s.rating}</span></div>
+        <div style="font-size:13px;color:${G};font-weight:500">${s.price}</div>
+      </div>
+      <button class="btn btn-wine" onclick="event.stopPropagation();goSalon(${s.id})" style="width:100%;padding:10px;border-radius:50px;font-size:13px">Book Now →</button>
+    </div>
+  </div>`;
+}
+
+function miniCard(s){
+  return`<div class="s-card" style="min-width:200px;width:200px" onclick="goSalon(${s.id})">
+    <div style="height:90px;background:linear-gradient(135deg,${s.a},${s.b});display:flex;align-items:center;justify-content:center;position:relative">
+      <div style="position:absolute;inset:0;background:rgba(0,0,0,.3)"></div>
+      <span class="pf" style="position:relative;color:rgba(255,255,255,.9);font-size:14px;font-style:italic;text-align:center;padding:0 10px">${s.name}</span>
+    </div>
+    <div style="padding:12px">
+      <div style="font-size:12px;color:rgba(255,249,246,.4);margin-bottom:4px">${s.area}</div>
+      <div style="font-size:12px;color:${G};margin-bottom:8px">${s.price}</div>
+      <button class="btn btn-wine" onclick="event.stopPropagation();goSalon(${s.id})" style="width:100%;padding:7px;border-radius:50px;font-size:12px">Book →</button>
+    </div>
+  </div>`;
+}
+
+function topNav(){
+  return`<nav class="nk-nav" id="main-nav">
+    <div class="nav-logo" onclick="go('landing')">Noor <span style="color:rgba(212,175,55,.25)">|</span> Knot</div>
+    <div class="nav-links">
+      <button class="nav-link desktop-only" onclick="go('salons')">Studios</button>
+      <button class="nav-link desktop-only" onclick="go('chat')">Consult Noor</button>
+      <button class="btn btn-wine" onclick="go('chat')" style="padding:11px 28px;border-radius:50px;font-size:14px">Talk to Noor ✦</button>
+    </div>
+  </nav>`;
+}
+
+/* ══════════════════════════════════════
+   LANDING
+══════════════════════════════════════ */
+function landingHTML(){
+  return`
+  ${topNav()}
+  <section id="hero" style="position:relative;min-height:100vh;background:radial-gradient(ellipse at 30% 60%,rgba(107,15,37,.65) 0%,transparent 55%),radial-gradient(ellipse at 75% 25%,rgba(139,105,20,.08) 0%,transparent 50%),linear-gradient(180deg,#050103 0%,#110408 55%,#050103 100%);display:flex;flex-direction:column;overflow:hidden">
+
+  <video autoplay muted loop playsinline id="bg-video">
+      <source src="videos/bridal-bg.mp4" type="video/mp4">
+  </video>
+
+  <div class="video-overlay"></div>
+    <div style="position:absolute;inset:0;overflow:hidden">${pts(22)}</div>
+    ${mandala()}
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;z-index:1">
+      <div id="hero-label" style="opacity:0;font-size:11px;letter-spacing:5px;color:rgba(212,175,55,.6);margin-bottom:28px;padding:8px 24px;border-top:1px solid rgba(212,175,55,.2);border-bottom:1px solid rgba(212,175,55,.2)">DELHI · BRIDAL BEAUTY · AI-MATCHED</div>
+      <h1 id="hero-title" class="pf" style="font-size:clamp(52px,8.5vw,112px);line-height:1.05;color:${IV};margin-bottom:28px;max-width:900px">
+        Your Bridal Look,<br>Decided —<br><em class="gold-text">Not Debated.</em>
+      </h1>
+      <p id="hero-sub" style="opacity:0;font-size:clamp(16px,2vw,20px);color:rgba(255,249,246,.45);max-width:480px;line-height:1.8;margin-bottom:48px;font-style:italic">From Lajpat to Lutyens — the artist who gets your skin, your shaadi, and your budget.</p>
+      <div id="hero-cta" style="opacity:0;display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:32px">
+        <button class="btn btn-wine" onclick="go('chat')" style="padding:18px 52px;border-radius:50px;font-size:17px;animation:glowPulse 3s infinite">Begin Your Journey ✦</button>
+        <button class="btn btn-ghost" onclick="go('salons')" style="padding:18px 36px;border-radius:50px;font-size:17px">Explore Studios</button>
+      </div>
+      <div id="hero-trust" style="opacity:0;font-size:12px;color:rgba(212,175,55,.35);letter-spacing:3px">✦ 50+ Delhi Studios &nbsp;·&nbsp; ✦ 2,000+ Brides &nbsp;·&nbsp; ✦ 4.9 Rated</div>
+    </div>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(transparent,#060104)"></div>
+  </section>
+   
+  <!-- MARQUEE -->
+  <div style="background:#0C0307;padding:18px 0;overflow:hidden;border-top:1px solid rgba(212,175,55,.07);border-bottom:1px solid rgba(212,175,55,.07)">
+    <div class="marquee-inner">${Array(4).fill('NOOR & KNOT &nbsp;·&nbsp; DELHI BRIDAL &nbsp;·&nbsp; AI-MATCHED &nbsp;·&nbsp; LUXURY &nbsp;·&nbsp; 2,000+ BRIDES &nbsp;·&nbsp; YOUR LOOK, DECIDED &nbsp;·&nbsp;').join(' ')}</div>
+  </div>
+
+  <!-- STATS -->
+  <section style="background:#060104;padding:72px 24px">
+    <div class="stats-row" style="max-width:860px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center">
+      ${[['500','Beauty Experts','+'],[  '2000','Brides Served','+'  ],['4.9','Avg Rating','★'],['50','Studios','+']].map(([n,l,sfx],i)=>`
+        <div class="stat-item" data-target="${n}" data-suffix="${sfx}" style="padding:28px 0;border-top:1px solid rgba(212,175,55,.12);opacity:0">
+          <div class="pf gold-text stat-num" style="font-size:clamp(36px,5vw,52px);font-weight:700;margin-bottom:8px">0${sfx}</div>
+          <div style="font-size:11px;color:rgba(255,249,246,.3);letter-spacing:3px">${l.toUpperCase()}</div>
+        </div>`).join('')}
+    </div>
+  </section>
+
+  <!-- NOOR SECTION -->
+  <section id="noor-section" style="background:#0A0306;padding:100px 24px;position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,${G},transparent)"></div>
+    <div class="noor-grid" style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center">
+      <div id="noor-left" style="opacity:0;transform:translateX(-50px)">
+        <div style="font-size:11px;letter-spacing:4px;color:rgba(212,175,55,.4);margin-bottom:20px">YOUR AI CONSULTANT</div>
+        <h2 class="pf" id="noor-heading" style="font-size:clamp(36px,4.5vw,62px);color:${IV};line-height:1.15;margin-bottom:24px">The AI that<br>knows Delhi's<br><em style="color:${G}">Brides.</em></h2>
+        <p style="font-size:18px;color:rgba(255,249,246,.45);line-height:1.8;margin-bottom:36px;font-style:italic">Tell Noor your wedding vision — venue, budget, skin tone, the look you dream of. She finds your perfect artist in seconds.</p>
+        <button class="btn btn-wine" onclick="go('chat')" style="padding:16px 44px;border-radius:50px;font-size:16px">Talk to Noor →</button>
+      </div>
+      <div id="noor-right" style="opacity:0;transform:translateX(50px)">
+        <div class="glass" style="padding:28px;border-color:rgba(212,175,55,.2)">
+          <div style="display:flex;gap:14px;margin-bottom:20px;align-items:flex-start">
+            <div style="width:40px;height:40px;min-width:40px;background:linear-gradient(135deg,${W},#3A0C1A);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(212,175,55,.3)">
+              <span class="pf" style="color:${G};font-size:16px;font-style:italic">N</span>
+            </div>
+            <div class="glass" style="padding:14px 18px;border-radius:4px 16px 16px 16px;flex:1">
+              <p style="font-size:15px;color:rgba(255,249,246,.75);line-height:1.75;font-style:italic">"Tell me about your wedding. I'll find your perfect match in Delhi."</p>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px">
+            ${['Budget ₹60k, December wedding','Traditional look, wheatish skin','Best salon near South Delhi'].map(s=>`<button class="btn" onclick="startChat('${s}')" style="padding:8px 16px;background:rgba(212,175,55,.07);color:rgba(255,249,246,.55);border:1px solid rgba(212,175,55,.15);border-radius:50px;font-size:13px">${s}</button>`).join('')}
+          </div>
+          <button class="btn btn-wine" onclick="go('chat')" style="width:100%;padding:14px;border-radius:50px;font-size:15px">Start Conversation →</button>
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,${G},transparent)"></div>
+  </section>
+
+  <!-- SALONS -->
+  <section style="background:#060104;padding:100px 0">
+    <div style="max-width:1100px;margin:0 auto;padding:0 40px">
+      <div id="salon-header" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;flex-wrap:wrap;gap:16px;opacity:0">
+        <div>
+          <div style="font-size:11px;letter-spacing:4px;color:rgba(212,175,55,.4);margin-bottom:14px">HANDPICKED</div>
+          <h2 class="pf" style="font-size:clamp(32px,4.5vw,58px);color:${IV};line-height:1.1">0${SALONS.length} Studios.<br><em style="color:${G}">Each Chosen Carefully.</em></h2>
+        </div>
+        <button class="btn btn-ghost" onclick="go('salons')" style="padding:14px 32px;border-radius:50px;font-size:15px;flex-shrink:0">View All →</button>
+      </div>
+    </div>
+    <div id="salon-carousel">
+      <div style="display:flex;gap:20px;width:max-content;padding-bottom:8px">
+        ${SALONS.map((s,i)=>`<div style="opacity:0;transform:translateY(30px)" class="salon-anim">${sCard(s)}</div>`).join('')}
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:28px auto 0;padding:0 40px">
+      <div style="display:flex;gap:12px">
+        <button class="btn" onclick="scrollCarousel(-1)" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(212,175,55,.25);color:${G};font-size:18px;justify-content:center">←</button>
+        <button class="btn" onclick="scrollCarousel(1)" style="width:44px;height:44px;border-radius:50%;background:${W};color:#fff;font-size:18px;justify-content:center">→</button>
+      </div>
+      <div style="font-size:13px;color:rgba(255,249,246,.3);letter-spacing:1px">Drag to explore</div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-section" style="background:#0A0306;padding:100px 24px;position:relative">
+    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,${G},transparent)"></div>
+    <div style="max-width:1100px;margin:0 auto">
+      <div id="how-header" style="margin-bottom:64px;opacity:0">
+        <div style="font-size:11px;letter-spacing:4px;color:rgba(212,175,55,.4);margin-bottom:14px">THE PROCESS</div>
+        <h2 class="pf" style="font-size:clamp(32px,4.5vw,58px);color:${IV};line-height:1.1">Your Perfect Look<br><em style="color:${G}">in Four Steps.</em></h2>
+      </div>
+      <div class="how-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0">
+        ${[['01','Talk to Noor','Tell our AI your vision'],['02','Get Matched','AI finds your ideal artist'],['03','Book Instantly','No phone calls needed'],['04','Look Flawless','Walk down the aisle glowing']].map(([n,t,d],i)=>`
+          <div class="how-item" style="padding:36px 28px;border-right:${i<3?'1px solid rgba(212,175,55,.08)':'none'};opacity:0;transform:translateY(40px)">
+            <div class="pf gold-text" style="font-size:52px;font-weight:700;margin-bottom:20px;line-height:1">${n}</div>
+            <h3 class="pf" style="font-size:20px;color:${IV};margin-bottom:12px">${t}</h3>
+            <p style="font-size:15px;color:rgba(255,249,246,.38);line-height:1.7">${d}</p>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,${G},transparent)"></div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section style="background:#060104;padding:100px 24px">
+    <div style="max-width:1100px;margin:0 auto">
+      <div id="test-header" style="margin-bottom:60px;text-align:center;opacity:0">
+        <div style="font-size:11px;letter-spacing:4px;color:rgba(212,175,55,.4);margin-bottom:14px">LOVE STORIES</div>
+        <h2 class="pf" style="font-size:clamp(32px,4vw,52px);color:${IV}">What Delhi <em style="color:${G}">Brides Say.</em></h2>
+      </div>
+      <div class="test-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px">
+        ${[['Priya S.','March 2024','Absolutely magical. My skin looked flawless from the ceremony all the way to midnight.'],['Ananya K.','December 2023','Noor found me a studio I\'d never have discovered — and it was absolutely perfect for my look.'],['Riya M.','February 2024','I described my dream look and in two minutes had three perfect options. Cried happy tears.']].map(([n,d,t],i)=>`
+          <div class="test-item" style="padding:44px 36px;border-top:1px solid rgba(212,175,55,.1);${i<2?'border-right:1px solid rgba(212,175,55,.07)':''};opacity:0;transform:translateY(30px)">
+            <div style="font-size:36px;color:rgba(212,175,55,.2);font-family:'Playfair Display',serif;margin-bottom:16px">"</div>
+            <p style="font-size:17px;color:rgba(255,249,246,.65);line-height:1.8;font-style:italic;margin-bottom:28px">${t}</p>
+            <div style="border-top:1px solid rgba(212,175,55,.1);padding-top:18px">
+              <div style="font-weight:600;color:${IV};font-size:15px">${n}</div>
+              <div style="font-size:12px;color:rgba(255,249,246,.3);margin-top:3px;letter-spacing:1px">MARRIED ${d.toUpperCase()}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="position:relative;min-height:60vh;background:radial-gradient(ellipse at 50% 50%,rgba(107,15,37,.5) 0%,transparent 60%),#060104;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 24px;overflow:hidden">
+    <div style="position:absolute;inset:0;overflow:hidden">${pts(14)}</div>
+    <div id="cta-block" style="position:relative;z-index:1;max-width:700px;opacity:0">
+      <div style="font-size:11px;letter-spacing:4px;color:rgba(212,175,55,.4);margin-bottom:20px">BEGIN</div>
+      <h2 class="pf" style="font-size:clamp(38px,6vw,80px);color:${IV};margin-bottom:24px;line-height:1.1">Ready to Find<br>Your <em class="gold-text">Perfect Match?</em></h2>
+      <p style="font-size:18px;color:rgba(255,249,246,.4);margin-bottom:40px;font-style:italic">One conversation with Noor is all it takes.</p>
+      <button class="btn btn-wine" onclick="go('chat')" style="padding:20px 64px;border-radius:50px;font-size:18px;animation:glowPulse 3s infinite">Start Your Bridal Journey →</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#030102;padding:52px 40px;border-top:1px solid rgba(212,175,55,.07)">
+    <div style="max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px;margin-bottom:36px">
+      <div>
+        <div class="pf gold-text" style="font-size:26px;letter-spacing:3px;margin-bottom:6px">Noor | Knot</div>
+        <div style="font-size:13px;color:rgba(255,249,246,.25)">Your Bridal Glow, Perfectly Planned.</div>
+      </div>
+      <div style="display:flex;gap:32px;flex-wrap:wrap">
+        ${[['Home','landing'],['Studios','salons'],['Talk to Noor','chat']].map(([l,p])=>`<button class="nav-link" onclick="go('${p}')">${l}</button>`).join('')}
+      </div>
+    </div>
+    <div style="height:1px;background:linear-gradient(to right,transparent,${G},transparent);margin-bottom:24px"></div>
+    <div style="font-size:12px;color:rgba(255,249,246,.2);text-align:center;letter-spacing:.5px">© 2026 Noor & Knot · Delhi, India · Built for Delhi Brides ✦</div>
+  </footer>`;
+}
+
+/* ══════════════════════════════════════
+   SALONS PAGE
+══════════════════════════════════════ */
+function salonsHTML(){
+  return`
+  ${topNav()}
+  <div style="padding-top:80px;min-height:100vh;background:#060104">
+    <div style="max-width:1100px;margin:0 auto;padding:60px 40px">
+      <div id="pg-title" style="margin-bottom:60px;opacity:0">
+        <div style="font-size:11px;letter-spacing:4px;color:rgba(212,175,55,.4);margin-bottom:14px">ALL STUDIOS</div>
+        <h1 class="pf" style="font-size:clamp(38px,5vw,68px);color:${IV};line-height:1.1">Delhi's Finest<br><em style="color:${G}">Bridal Studios.</em></h1>
+        <p style="font-size:17px;color:rgba(255,249,246,.35);margin-top:16px;font-style:italic">Or let <span style="color:${G};cursor:pointer;text-decoration:underline;text-underline-offset:4px" onclick="go('chat')">Noor</span> find the perfect one for you.</p>
+      </div>
+      <div class="salon-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+        ${SALONS.map((s,i)=>`<div class="pg-card" style="opacity:0;transform:translateY(30px)">${sCard(s,'100%')}</div>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ══════════════════════════════════════
+   CHAT PAGE
+══════════════════════════════════════ */
+function chatHTML(){
+  const msgs=ST.msgs.map(m=>{
+    if(m.type==='user') return`<div class="msg-in" style="display:flex;justify-content:flex-end;margin-bottom:18px"><div style="max-width:72%;background:${W};border-radius:18px 18px 4px 18px;padding:14px 18px"><p style="font-size:16px;color:#fff;line-height:1.7">${m.text}</p></div></div>`;
+    if(m.type==='noor'){
+      const cards=m.salons&&m.salons.length?`<div style="display:flex;gap:12px;margin-top:14px;overflow-x:auto;padding-bottom:4px">${m.salons.map(s=>miniCard(s)).join('')}</div>`:'';
+      return`<div class="msg-in" style="display:flex;gap:12px;margin-bottom:18px;align-items:flex-start">
+        <div style="width:38px;height:38px;min-width:38px;background:linear-gradient(135deg,${W},#3A0C1A);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(212,175,55,.3)">
+          <span class="pf" style="color:${G};font-size:15px;font-style:italic">N</span>
+        </div>
+        <div style="max-width:82%">
+          <div class="glass" style="padding:14px 18px;border-radius:4px 18px 18px 18px"><p style="font-size:16px;color:rgba(255,249,246,.82);line-height:1.75;font-style:italic">${m.text}</p></div>
+          ${cards}
+        </div>
+      </div>`;
+    }
+    return'';
+  }).join('');
+
+  const typing=ST.typing?`<div style="display:flex;gap:12px;margin-bottom:18px;align-items:center">
+    <div style="width:38px;height:38px;min-width:38px;background:linear-gradient(135deg,${W},#3A0C1A);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(212,175,55,.3)"><span class="pf" style="color:${G};font-size:15px;font-style:italic">N</span></div>
+    <div class="glass" style="padding:14px 18px;border-radius:4px 18px 18px 18px">${[0,1,2].map(i=>`<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${G};margin:0 3px;animation:pulse 1.2s infinite;animation-delay:${i*.2}s"></span>`).join('')}</div>
+  </div>`:'';
+
+  const welcome=!ST.msgs.length?`<div style="text-align:center;padding:52px 20px">
+    <div style="width:72px;height:72px;background:linear-gradient(135deg,${W},#4A1020);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;border:2px solid rgba(212,175,55,.3);animation:glowPulse 4s infinite"><span class="pf" style="color:${G};font-size:26px;font-style:italic">N</span></div>
+    <h2 class="pf" style="font-size:clamp(22px,4vw,32px);color:${IV};margin-bottom:12px">I'm Noor ✦</h2>
+    <p style="color:rgba(255,249,246,.38);font-size:16px;line-height:1.8;max-width:400px;margin:0 auto 32px;font-style:italic">Your AI bridal consultant. Tell me your wedding vision.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:520px;margin:0 auto">
+      ${['Budget ₹60k, December banquet 🌟','Best airbrush salon near South Delhi 💄','Wheatish skin, traditional temple wedding 🪔','What to do 90 days before my wedding? 📅'].map(t=>`<button class="btn" onclick="sendSug('${t.replace(/'/g,"\\'")}')" style="padding:10px 18px;background:rgba(212,175,55,.06);color:rgba(255,249,246,.55);border:1px solid rgba(212,175,55,.15);border-radius:50px;font-size:13px">${t}</button>`).join('')}
+    </div>
+  </div>`:'';
+
+  return`
+  <div style="background:#060104;min-height:100vh">
+    ${topNav()}
+    <div class="chat-wrap" style="padding-top:64px">
+      <div id="chat-msgs">${welcome}${msgs}${typing}</div>
+      <div style="padding:14px 20px;border-top:1px solid rgba(212,175,55,.08);background:rgba(6,1,4,.98)">
+        <div style="display:flex;gap:12px;background:rgba(15,4,8,.95);border:1px solid rgba(212,175,55,.18);border-radius:50px;padding:8px 8px 8px 22px;max-width:760px;margin:0 auto">
+          <input type="text" id="chat-in" placeholder="Ask Noor anything about your bridal look..." style="flex:1;background:transparent;border:none;font-size:15px;color:${IV};outline:none;font-family:'Cormorant Garamond',serif;caret-color:${G}" onkeydown="if(event.key==='Enter'){event.preventDefault();sendMsg()}"/>
+          <button class="btn btn-wine" onclick="sendMsg()" style="padding:12px 24px;border-radius:50px;font-size:14px;flex-shrink:0">Send →</button>
+        </div>
+        <p style="text-align:center;font-size:11px;color:rgba(255,249,246,.15);margin-top:8px;letter-spacing:.5px">Always confirm details directly with the salon</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ══════════════════════════════════════
+   SALON PROFILE
+══════════════════════════════════════ */
+function salonHTML(){
+  const s=ST.salon;
+  const svcs=[['Bridal Makeup','Airbrush or HD finish','₹25,000–₹45,000'],['Pre-Bridal Package','Facial, cleanup, glow','₹15,000–₹25,000'],['Bridal Hair Styling','Bun, braids, or open waves','₹8,000–₹15,000'],['Mehendi Application','Full bridal + bridesmaids','₹5,000–₹12,000'],['Complete Bridal Package','Everything, bundled','₹85,000–₹1,50,000']];
+  const revs=[{n:'Priya S.',d:'March 2024',t:'Absolutely magical. My skin looked flawless from the ceremony to midnight.'},{n:'Ananya K.',d:'December 2023',t:'They understood exactly what I envisioned and delivered something even more beautiful.'},{n:'Riya M.',d:'February 2024',t:'Best decision I made. My whole family kept asking who did my makeup!'}];
+  return`
+  <div style="background:#060104;min-height:100vh">
+    ${topNav()}
+    <div id="salon-hero" style="height:380px;background:linear-gradient(160deg,${s.a},${s.b});position:relative;overflow:hidden;display:flex;align-items:flex-end;padding-top:64px;opacity:0">
+      <div style="position:absolute;inset:0;background:rgba(0,0,0,.5)"></div>
+      <div style="position:relative;padding:40px;width:100%;max-width:1100px;margin:0 auto">
+        <div style="font-size:11px;letter-spacing:4px;color:rgba(212,175,55,.8);margin-bottom:10px">${s.area.toUpperCase()} · DELHI</div>
+        <h1 class="pf" style="font-size:clamp(32px,5vw,58px);color:#fff;margin-bottom:8px">${s.name}</h1>
+        <div style="font-size:16px;color:rgba(255,255,255,.6)">${s.spec}</div>
+      </div>
+    </div>
+    <div style="max-width:1100px;margin:0 auto;padding:48px 40px">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid rgba(212,175,55,.1)">
+        <div><div style="margin-bottom:6px">${stars(s.rating)}<span style="font-size:14px;color:rgba(255,249,246,.35);margin-left:8px">${s.rating} · ${s.rev} reviews</span></div><div style="font-size:13px;color:rgba(255,249,246,.28)">${s.area}, Delhi</div></div>
+        <button class="btn btn-wine" onclick="go('booking')" style="padding:14px 40px;border-radius:50px;font-size:16px">Book Appointment →</button>
+      </div>
+      <div style="background:linear-gradient(135deg,rgba(212,175,55,.08),rgba(123,30,61,.06));border:1px solid rgba(212,175,55,.2);border-radius:20px;padding:32px;margin-bottom:48px">
+        <div style="font-size:11px;letter-spacing:3px;color:rgba(212,175,55,.5);margin-bottom:8px">SIGNATURE PACKAGE</div>
+        <h3 class="pf" style="font-size:24px;color:${IV};margin-bottom:16px">Complete Wedding Day Transformation</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">${['Airbrush Makeup','Bridal Hair','Pre-Bridal Facial','Trial Session','Touch-up Kit'].map(t=>`<span style="padding:7px 16px;background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.2);border-radius:20px;font-size:13px;color:${G}">${t}</span>`).join('')}</div>
+        <div class="pf gold-text" style="font-size:32px">Starting ₹85,000</div>
+      </div>
+      <h3 class="pf" style="font-size:26px;color:${IV};margin-bottom:24px">Services & Pricing</h3>
+      <div style="border:1px solid rgba(212,175,55,.09);border-radius:16px;overflow:hidden;margin-bottom:48px">
+        ${svcs.map(([n,d,p],i)=>`<div style="padding:18px 24px;display:flex;justify-content:space-between;align-items:center;${i<svcs.length-1?'border-bottom:1px solid rgba(212,175,55,.06)':''}"><div><div style="font-weight:600;color:${IV};font-size:16px">${n}</div><div style="font-size:13px;color:rgba(255,249,246,.3);margin-top:3px">${d}</div></div><div style="font-size:14px;color:${G};font-weight:500;white-space:nowrap;margin-left:16px">${p}</div></div>`).join('')}
+      </div>
+      <h3 class="pf" style="font-size:26px;color:${IV};margin-bottom:24px">What Brides Say</h3>
+      <div style="display:grid;gap:14px;margin-bottom:52px">${revs.map(r=>`<div class="glass" style="padding:24px;border-color:rgba(212,175,55,.1)"><div style="display:flex;justify-content:space-between;margin-bottom:12px"><div><div style="font-weight:600;color:${IV};font-size:15px">${r.n}</div><div style="font-size:12px;color:rgba(255,249,246,.28);margin-top:2px;letter-spacing:.5px">MARRIED ${r.d.toUpperCase()}</div></div><div>${stars(5)}</div></div><p style="color:rgba(255,249,246,.6);font-size:16px;line-height:1.75;font-style:italic">"${r.t}"</p></div>`).join('')}</div>
+      <div style="text-align:center"><button class="btn btn-wine" onclick="go('booking')" style="padding:18px 68px;border-radius:50px;font-size:18px;animation:glowPulse 3s infinite">Book Your Experience →</button></div>
+    </div>
+  </div>`;
+}
+
+/* ══════════════════════════════════════
+   BOOKING PAGE
+══════════════════════════════════════ */
+function bookingHTML(){
+  if(ST.booked){
+    const id='NK-2026-'+Math.floor(1000+Math.random()*9000);
+    return`<div style="background:#060104;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px">${topNav()}<div style="text-align:center;max-width:480px;width:100%;margin-top:64px">
+      <div id="check-circle" style="width:80px;height:80px;background:linear-gradient(135deg,${W},#3A0C1A);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 28px;border:2px solid rgba(212,175,55,.4);opacity:0"><svg width="34" height="34" viewBox="0 0 34 34" fill="none"><path d="M7 17L14 24L27 11" stroke="${G}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h1 class="pf" id="confirm-title" style="font-size:38px;color:${IV};margin-bottom:12px;opacity:0">You're All Set ✦</h1>
+      <p style="color:rgba(255,249,246,.4);font-size:17px;margin-bottom:36px;line-height:1.7;font-style:italic">The ${ST.salon.name} team will contact you within 2 hours.</p>
+      <div class="glass" style="padding:28px;text-align:left;margin-bottom:32px;border-color:rgba(212,175,55,.18)">${[['Booking ID',id],['Studio',ST.salon.name],['Location',ST.salon.area+', Delhi'],['Status','Confirmed ✓']].map(([k,v])=>`<div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(212,175,55,.07)"><span style="font-size:11px;letter-spacing:2px;color:rgba(255,249,246,.28)">${k.toUpperCase()}</span><span style="font-size:14px;font-weight:600;color:${k==='Status'?'#4ade80':IV}">${v}</span></div>`).join('')}</div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-wine" onclick="go('chat')" style="padding:14px 32px;border-radius:50px;font-size:15px">Talk to Noor Again</button>
+        <button class="btn btn-ghost" onclick="go('landing')" style="padding:14px 32px;border-radius:50px;font-size:15px">Back to Home</button>
+      </div>
+    </div></div>`;
+  }
+  return`<div style="background:#060104;min-height:100vh">${topNav()}
+    <div style="max-width:520px;margin:0 auto;padding:120px 24px 60px">
+      <div id="bk-title" style="margin-bottom:44px;opacity:0">
+        <div style="font-size:11px;letter-spacing:4px;color:rgba(212,175,55,.4);margin-bottom:12px">BOOKING</div>
+        <h1 class="pf" style="font-size:clamp(28px,4vw,44px);color:${IV};margin-bottom:8px">Book Your Experience.</h1>
+        <p style="color:rgba(255,249,246,.3);font-size:15px;font-style:italic">${ST.salon.name} · ${ST.salon.area}, Delhi</p>
+      </div>
+      <div class="glass" id="bk-form" style="padding:40px;border-color:rgba(212,175,55,.15);opacity:0">
+        ${[["Bride's Full Name","text","bn","Priya Sharma"],["Email Address","email","be","priya@gmail.com"],["Phone Number","tel","bp","+91 98765 43210"]].map(([l,t,id,ph])=>`<div style="margin-bottom:28px"><label style="font-size:11px;letter-spacing:3px;color:rgba(212,175,55,.4);display:block;margin-bottom:10px">${l.toUpperCase()}</label><input type="${t}" placeholder="${ph}" id="${id}" class="nk-input" onfocus="this.style.borderBottomColor='${G}'" onblur="this.style.borderBottomColor='rgba(212,175,55,.2)'"/></div>`).join('')}
+        <div style="margin-bottom:28px"><label style="font-size:11px;letter-spacing:3px;color:rgba(212,175,55,.4);display:block;margin-bottom:10px">WEDDING DATE</label><input type="date" id="bd" class="nk-input" style="color-scheme:dark"/></div>
+        <div style="margin-bottom:40px"><label style="font-size:11px;letter-spacing:3px;color:rgba(212,175,55,.4);display:block;margin-bottom:10px">SELECT PACKAGE</label>
+          <select id="bpk" class="nk-input"><option>Trial Session (₹8,000)</option><option>Pre-Bridal Package (₹25,000)</option><option selected>Full Bridal Package (₹85,000)</option><option>Signature Luxury Package (₹1,50,000)</option></select>
+        </div>
+        <button class="btn btn-wine" onclick="confirmBook()" style="width:100%;padding:18px;border-radius:50px;font-size:17px">Confirm Booking →</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ══════════════════════════════════════
+   GSAP ANIMATIONS
+══════════════════════════════════════ */
+function killAll(){
+  ScrollTrigger.getAll().forEach(st=>st.kill());
+}
+
+/* Split text into word spans for reveal animation */
+function splitWords(el){
+  if(!el||el.dataset.split)return;
+  el.dataset.split='1';
+  // Handle nested elements (italic spans etc)
+  function processNode(node){
+    if(node.nodeType===3){// text node
+      const words=node.textContent.split(/(\s+)/);
+      const frag=document.createDocumentFragment();
+      words.forEach(w=>{
+        if(/^\s+$/.test(w)||w===''){
+          frag.appendChild(document.createTextNode(w));
+        } else {
+          const outer=document.createElement('span');
+          outer.className='word-wrap';
+          const inner=document.createElement('span');
+          inner.className='word-inner';
+          inner.textContent=w;
+          outer.appendChild(inner);
+          frag.appendChild(outer);
+        }
+      });
+      node.parentNode.replaceChild(frag,node);
+    } else if(node.nodeType===1&&node.tagName!=='BR'){
+      Array.from(node.childNodes).forEach(processNode);
+    }
+  }
+  Array.from(el.childNodes).forEach(processNode);
+}
+
+function animateWords(el,delay=0){
+  const words=el.querySelectorAll('.word-inner');
+  if(!words.length)return;
+  gsap.to(words,{
+    y:'0%',opacity:1,duration:.8,stagger:.06,
+    ease:'power3.out',delay
+  });
+}
+
+function initLandingAnims(){
+  // NAV slides down
+  gsap.to('#main-nav',{opacity:1,y:0,duration:.8,ease:'power3.out',delay:.2});
+
+  // Label fades in
+  gsap.to('#hero-label',{opacity:1,y:0,duration:.7,ease:'power3.out',delay:.5});
+
+  // Hero title — word by word reveal
+  const title=document.getElementById('hero-title');
+  if(title){
+    splitWords(title);
+    gsap.set(title,{opacity:1});
+    gsap.to(title.querySelectorAll('.word-inner'),{
+      y:'0%',opacity:1,duration:.9,stagger:.07,
+      ease:'power3.out',delay:.7
+    });
+  }
+
+  // Subtext, CTA, trust
+  gsap.to('#hero-sub',{opacity:1,y:0,duration:.7,ease:'power3.out',delay:1.4});
+  gsap.to('#hero-cta',{opacity:1,y:0,duration:.7,ease:'power3.out',delay:1.65});
+  gsap.to('#hero-trust',{opacity:1,duration:.6,delay:1.9});
+
+  // Mandala slow rotation on scroll
+  gsap.to('#hero-mandala',{
+    scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:1},
+    rotation:25,y:-80,opacity:0,ease:'none'
+  });
+
+  // STATS — count up when in view
+  document.querySelectorAll('.stat-item').forEach((el,i)=>{
+    ScrollTrigger.create({
+      trigger:el,start:'top 85%',
+      onEnter:()=>{
+        gsap.to(el,{opacity:1,y:0,duration:.7,delay:i*.1,ease:'power3.out'});
+        const target=parseInt(el.dataset.target);
+        const sfx=el.dataset.suffix;
+        const numEl=el.querySelector('.stat-num');
+        const obj={v:0};
+        gsap.to(obj,{v:target,duration:1.8,delay:i*.1,ease:'power2.out',
+          onUpdate:()=>{numEl.textContent=Math.round(obj.v).toLocaleString()+sfx;}
+        });
+      }
+    });
+  });
+
+  // NOOR section — slide in from sides
+  ScrollTrigger.create({
+    trigger:'#noor-section',start:'top 75%',
+    onEnter:()=>{
+      gsap.to('#noor-left',{opacity:1,x:0,duration:.9,ease:'power3.out'});
+      gsap.to('#noor-right',{opacity:1,x:0,duration:.9,ease:'power3.out',delay:.15});
+    }
+  });
+
+  // SALON header
+  ScrollTrigger.create({
+    trigger:'#salon-header',start:'top 80%',
+    onEnter:()=>gsap.to('#salon-header',{opacity:1,y:0,duration:.8,ease:'power3.out'})
+  });
+
+  // SALON cards stagger
+  ScrollTrigger.create({
+    trigger:'#salon-carousel',start:'top 80%',
+    onEnter:()=>{
+      gsap.to('.salon-anim',{opacity:1,y:0,duration:.7,stagger:.1,ease:'power3.out'});
+    }
+  });
+
+  // HOW IT WORKS
+  ScrollTrigger.create({
+    trigger:'#how-header',start:'top 80%',
+    onEnter:()=>gsap.to('#how-header',{opacity:1,y:0,duration:.8,ease:'power3.out'})
+  });
+  document.querySelectorAll('.how-item').forEach((el,i)=>{
+    ScrollTrigger.create({
+      trigger:el,start:'top 85%',
+      onEnter:()=>gsap.to(el,{opacity:1,y:0,duration:.7,delay:i*.12,ease:'power3.out'})
+    });
+  });
+
+  // TESTIMONIALS
+  ScrollTrigger.create({
+    trigger:'#test-header',start:'top 80%',
+    onEnter:()=>gsap.to('#test-header',{opacity:1,y:0,duration:.8,ease:'power3.out'})
+  });
+  document.querySelectorAll('.test-item').forEach((el,i)=>{
+    ScrollTrigger.create({
+      trigger:el,start:'top 85%',
+      onEnter:()=>gsap.to(el,{opacity:1,y:0,duration:.7,delay:i*.12,ease:'power3.out'})
+    });
+  });
+
+  // CTA block
+  ScrollTrigger.create({
+    trigger:'#cta-block',start:'top 80%',
+    onEnter:()=>gsap.to('#cta-block',{opacity:1,y:0,duration:.9,ease:'power3.out'})
+  });
+}
+
+function initPageAnims(){
+  // Fade in nav
+  gsap.to('#main-nav',{opacity:1,duration:.5,ease:'power2.out'});
+
+  // Page title
+  const title=document.getElementById('pg-title');
+  if(title) gsap.to(title,{opacity:1,y:0,duration:.8,ease:'power3.out',delay:.3});
+
+  // Salon grid cards
+  document.querySelectorAll('.pg-card').forEach((el,i)=>{
+    ScrollTrigger.create({
+      trigger:el,start:'top 85%',
+      onEnter:()=>gsap.to(el,{opacity:1,y:0,duration:.6,ease:'power3.out',delay:i*.07})
+    });
+    // also trigger immediately if already visible
+    gsap.to(el,{opacity:1,y:0,duration:.6,ease:'power3.out',delay:.3+i*.08});
+  });
+
+  // Salon profile hero
+  const sh=document.getElementById('salon-hero');
+  if(sh) gsap.to(sh,{opacity:1,duration:.8,ease:'power2.out',delay:.3});
+
+  // Booking
+  const bt=document.getElementById('bk-title');
+  if(bt) gsap.to(bt,{opacity:1,y:0,duration:.7,ease:'power3.out',delay:.3});
+  const bf=document.getElementById('bk-form');
+  if(bf) gsap.to(bf,{opacity:1,y:0,duration:.7,ease:'power3.out',delay:.5});
+
+  // Booking success
+  const cc=document.getElementById('check-circle');
+  if(cc){
+    gsap.to(cc,{opacity:1,scale:1,duration:.6,ease:'back.out(1.7)',delay:.3});
+    const ct=document.getElementById('confirm-title');
+    if(ct) gsap.to(ct,{opacity:1,y:0,duration:.6,ease:'power3.out',delay:.7});
+  }
+}
+
+/* ══════════════════════════════════════
+   PAGE TRANSITION
+══════════════════════════════════════ */
+function pageTransition(cb){
+
+  const dome = document.getElementById('dome');
+
+  gsap.set(dome,{
+    y:'100%'
+  });
+
+  const tl = gsap.timeline();
+
+  tl.to(dome,{
+      y:'-45%',
+    duration:1,
+    ease:'power4.inOut'
+  })
+
+  .call(()=>{
+      cb();
+      window.scrollTo(0,0);
+  })
+
+  .to(dome,{
+      y:'100%',
+      duration:0.9,
+      ease:'power4.inOut'
+  });
+}
+
+/* ══════════════════════════════════════
+   ROUTING
+══════════════════════════════════════ */
+function go(p){
+  if(ST.page===p&&p!=='booking')return;
+  pageTransition(()=>{
+    ST.page=p;
+    if(p!=='booking')ST.booked=false;
+    render();
+  });
+}
+function goSalon(id){
+  pageTransition(()=>{
+    ST.salon=SALONS.find(s=>s.id===id)||SALONS[0];
+    ST.page='salon';
+    render();
+  });
+}
+function confirmBook(){ST.booked=true;render();}
+function startChat(t){
+  pageTransition(()=>{
+    ST.page='chat';
+    render();
+    setTimeout(()=>{const i=document.getElementById('chat-in');if(i){i.value=t;sendMsg();}},300);
+  });
+}
+function sendSug(t){const i=document.getElementById('chat-in');if(i){i.value=t;sendMsg();}}
+function scrollCarousel(dir){const c=document.getElementById('salon-carousel');if(c)c.scrollBy({left:dir*300,behavior:'smooth'});}
+
+/* ══════════════════════════════════════
+   CHAT
+══════════════════════════════════════ */
+async function sendMsg(){
+  const inp = document.getElementById('chat-in');
+  if(!inp) return;
+  const txt = inp.value.trim();
+  if(!txt) return;
+
+  inp.value = '';
+  ST.msgs.push({ type:'user', text:txt });
+  ST.typing = true;
+  render();
+  scrollChat();
+
+  try {
+    // Call your Gemini backend
+    const res = await fetch('http://localhost:3002/noor', {
+      method  : 'POST',
+      headers : { 'Content-Type': 'application/json' },
+      body    : JSON.stringify({ message: txt })
+    });
+    const data = await res.json();
+
+    // Gemini writes the reply, keyword matching picks salon cards
+    const salonMatch = demoReply(txt);
+    ST.msgs.push({ type:'noor', text: data.reply, salons: salonMatch.salons });
+
+  } catch(err) {
+    // Backend offline → fall back to demo responses
+    const reply = demoReply(txt);
+    ST.msgs.push({ type:'noor', text: reply.text, salons: reply.salons });
+  }
+
+  ST.typing = false;
+  render();
+  scrollChat();
+}
+function scrollChat(){setTimeout(()=>{const e=document.getElementById('chat-msgs');if(e)e.scrollTop=e.scrollHeight;},80);}
+
+/* ══════════════════════════════════════
+   NAV SCROLL EFFECT
+══════════════════════════════════════ */
+function initNav(){
+  const nav=document.getElementById('main-nav');
+  if(!nav)return;
+  const fn=()=>nav.classList.toggle('scrolled',window.scrollY>60);
+  window.addEventListener('scroll',fn,{passive:true});
+  fn();
+}
+
+/* ══════════════════════════════════════
+   RENDER
+══════════════════════════════════════ */
+function render(){
+  killAll();
+  const app=document.getElementById('nk');
+  switch(ST.page){
+    case 'landing': app.innerHTML=landingHTML(); break;
+    case 'salons':  app.innerHTML=salonsHTML();  break;
+    case 'chat':    app.innerHTML=chatHTML();    setTimeout(scrollChat,120); break;
+    case 'salon':   app.innerHTML=salonHTML();   break;
+    case 'booking': app.innerHTML=bookingHTML(); break;
+    default:        app.innerHTML=landingHTML();
+  }
+  requestAnimationFrame(()=>{
+    initNav();
+    ScrollTrigger.refresh();
+    if(ST.page==='landing') initLandingAnims();
+    else initPageAnims();
+  });
+}
+
+render();
+/* ══════════════════════════════════════
+   CUSTOM CURSOR
+══════════════════════════════════════ */
+(function(){
+  // Only run on devices with a real cursor (not touch)
+  if(!window.matchMedia('(pointer:fine)').matches) return;
+
+  const dot  = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  if(!dot || !ring) return;
+
+  let mX=window.innerWidth/2, mY=window.innerHeight/2;
+  let rX=mX, rY=mY;
+  let visible=false;
+
+  // Track mouse position
+  document.addEventListener('mousemove', e=>{
+    mX=e.clientX; mY=e.clientY;
+    if(!visible){
+      visible=true;
+      dot.style.opacity='1';
+      ring.style.opacity='1';
+      // Snap ring to position on first appearance
+      rX=mX; rY=mY;
+    }
+    // Dot follows cursor instantly
+    dot.style.left = mX+'px';
+    dot.style.top  = mY+'px';
+  });
+
+  // Ring follows with smooth lag (lerp)
+  function lerp(a,b,t){ return a+(b-a)*t; }
+
+  function animateRing(){
+    rX = lerp(rX, mX, 0.1);
+    rY = lerp(rY, mY, 0.1);
+    ring.style.left = rX+'px';
+    ring.style.top  = rY+'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Hide when mouse leaves window
+  document.addEventListener('mouseleave',()=>{
+    dot.style.opacity='0';
+    ring.style.opacity='0';
+    visible=false;
+  });
+  document.addEventListener('mouseenter',()=>{
+    dot.style.opacity='1';
+    ring.style.opacity='1';
+    visible=true;
+  });
+
+  // Expand ring on hover over interactive elements
+  const HOVER_TARGETS='button,a,.btn,.s-card,.nav-link,.nav-logo,.nk-input,select';
+
+  document.addEventListener('mouseover', e=>{
+    if(e.target.closest(HOVER_TARGETS)){
+      ring.classList.add('expanded');
+      dot.style.transform='translate(-50%,-50%) scale(0)';
+    }
+  });
+  document.addEventListener('mouseout', e=>{
+    if(e.target.closest(HOVER_TARGETS)){
+      ring.classList.remove('expanded');
+      dot.style.transform='translate(-50%,-50%) scale(1)';
+    }
+  });
+
+  // Shrink on click
+  document.addEventListener('mousedown',()=>{
+    ring.classList.add('clicking');
+    dot.style.background='#fff';
+  });
+  document.addEventListener('mouseup',()=>{
+    ring.classList.remove('clicking');
+    dot.style.background='#D4AF37';
+  });
+})();
+/* ══════════════════════════════════════
+   CURSOR TRAIL — Canvas based
+══════════════════════════════════════ */
+(function(){
+  if(!window.matchMedia('(pointer:fine)').matches) return;
+
+  // Create full-screen canvas overlay
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;pointer-events:none;z-index:999996;';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+
+  function resize(){
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const TRAIL_LIFE = 420; // ms trail stays visible
+  let pts = [];           // [x, y, timestamp]
+
+  document.addEventListener('mousemove', e => {
+    pts.push([e.clientX, e.clientY, Date.now()]);
+  });
+
+  function draw(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const now = Date.now();
+
+    // Kill points older than TRAIL_LIFE
+    pts = pts.filter(p => now - p[2] < TRAIL_LIFE);
+
+    if(pts.length < 2){ requestAnimationFrame(draw); return; }
+
+    // Draw each segment — newer = brighter + thicker
+    for(let i = 1; i < pts.length; i++){
+      const age  = now - pts[i][2];           // 0 = just drawn
+      const life = 1 - (age / TRAIL_LIFE);    // 1 = fresh, 0 = dead
+
+      ctx.beginPath();
+      ctx.moveTo(pts[i-1][0], pts[i-1][1]);
+      ctx.lineTo(pts[i][0],   pts[i][1]);
+      ctx.strokeStyle = `rgba(212,175,55,${(life * life * 0.55).toFixed(3)})`;
+      ctx.lineWidth   = life * 2.2;
+      ctx.lineCap     = 'round';
+      ctx.lineJoin    = 'round';
+      ctx.stroke();
+    }
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+/* ══════════════════════════════════════
+   DOME SCROLL TRANSITION
+   220vw wide circle rises from below —
+   only its curved top arc is visible
+   = the dome/arch shape from Obsidian
+══════════════════════════════════════ */
+(function(){
+  const dome = document.getElementById('dome');
+  if(!dome) return;
+
+  let st = null;
+
+  function initDome(){
+    if(st){ st.kill(); st=null; }
+
+    const hero = document.getElementById('hero');
+    if(!hero){
+      dome.style.opacity = '0';
+      return;
+    }
+
+    // Reset
+    dome.style.opacity   = '1';
+    dome.style.transform = 'translateX(-50%) translateY(100%)';
+
+    st = ScrollTrigger.create({
+      trigger : hero,
+      start   : 'top top',
+      end     : 'bottom top',
+      scrub   : 2.5,
+      onUpdate: self => {
+        // 100% = fully below screen (hidden)
+        // -15% = fully covering screen
+        const y = 100 - (self.progress * 118);
+        dome.style.transform =
+          `translateX(-50%) translateY(${y.toFixed(3)}%)`;
+      },
+      onLeave: () => {
+        // Hero scrolled past — fade dome out
+        // so next sections are cleanly visible
+        dome.style.opacity   = '0';
+        dome.style.transform = 'translateX(-50%) translateY(-50%)';
+      },
+      onEnterBack: () => {
+        // Scrolling back into hero — show dome again
+        dome.style.opacity = '1';
+      },
+      onLeaveBack: () => {
+        // Back at very top — reset dome to hidden
+        dome.style.transform = 'translateX(-50%) translateY(100%)';
+      }
+    });
+  }
+
+  // Hook into your render function
+  const _orig = window.render;
+  window.render = function(){
+    _orig();
+    requestAnimationFrame(()=>{
+      if(ST && ST.page === 'landing'){
+        setTimeout(initDome, 150);
+      } else {
+        if(st){ st.kill(); st=null; }
+        dome.style.opacity   = '0';
+        dome.style.transform = 'translateX(-50%) translateY(100%)';
+      }
+    });
+  };
+
+  // Init on first load
+  requestAnimationFrame(()=>{
+    if(ST && ST.page === 'landing') initDome();
+    else dome.style.opacity = '0';
+  });
+})();
+</script>
+<div id="dome"></div>
+</body>
+</html>
