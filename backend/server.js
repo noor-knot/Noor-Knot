@@ -219,4 +219,4 @@ app.post('/bookings', async (req, res) => {
   }
 });
 
-app.listen(3002, () => console.log('Noor backend live on port 3002'));
+app.listen(process.env.PORT || 3002, () => console.log('Noor backend live on port', process.env.PORT || 3002));
