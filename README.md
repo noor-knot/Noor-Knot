@@ -2,7 +2,7 @@ Noor & Knot 💍
 Delhi Bridal Beauty Booking Platform
 
 Live Demo:
-[Noor & Knot Live Website](https://noorandknot.netlify.app/)
+[Noor & Knot Live Website](https://noor-knot-eight.vercel.app/)
 
 GitHub Repository:
 [NoorKnot Repository](https://github.com/3iyam8ings/Noor-Knot/)
