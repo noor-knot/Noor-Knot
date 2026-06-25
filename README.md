@@ -110,4 +110,4 @@ Built with late nights, endless iterations, and a lot of heart 💪
 
 Status: Successfully Designed, Developed & Deployed ✅
 
-⭐ If you like our project, please give it a star on GitHub!
+
