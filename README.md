@@ -1,105 +1,112 @@
-Noor & Knot 💍
-Delhi Bridal Beauty Booking Platform
+<div align="center">
 
-Live Demo:
-[Noor & Knot Live Website](https://noor-knot-eight.vercel.app/)
+# 💍 Noor & Knot
+### *Where Every Bride Finds Her Glow*
 
-GitHub Repository:
-[NoorKnot Repository](https://github.com/noor-knot/Noor-Knot)
+**Delhi's Premium Bridal Beauty Booking Platform**
 
-📌 Problem Statement
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_Now-rose?style=for-the-badge)](https://noor-knot-eight.vercel.app/)
+[![GitHub Repo](https://img.shields.io/badge/📂_GitHub-Source_Code-black?style=for-the-badge)](https://github.com/noor-knot/Noor-Knot)
+[![Status](https://img.shields.io/badge/Status-Live_&_Deployed_✅-success?style=for-the-badge)]()
 
-As part of the AI Startup Buildathon 2026 – Beauty Salon Marketplace Challenge, our team was tasked with creating a modern startup-style platform focused on a specific city.
+</div>
 
-We chose:
+---
 
-Delhi Bridal Beauty Booking Platform
+## 💭 The Problem We Solved
 
-Finding trusted bridal salons, makeup artists, and beauty services in Delhi can be time-consuming and fragmented. Brides often have to search across multiple platforms, compare services manually, and struggle to find verified professionals.
+> *"I spent 3 weeks searching for a bridal makeup artist in Delhi. 10 Instagram DMs. 4 broken links. 2 ghosted vendors."*
+> — Every Delhi bride, ever.
 
-Noor & Knot simplifies this process by providing a centralized platform where users can discover, explore, and connect with premium bridal beauty services in Delhi.
+Finding **trusted bridal salons, makeup artists, and beauty services** in Delhi is broken.
 
-✨ Solution
+- 🔍 Scattered across Instagram, JustDial, random blogs
+- 😓 No way to compare services in one place
+- ❓ Zero verified reviews or pricing transparency
+- ⏳ Hours wasted — for the most important day of your life
 
-Noor & Knot is a modern bridal beauty marketplace designed to help brides discover luxury salons, bridal makeup artists, and wedding beauty services in Delhi.
+**We built the fix.**
 
-The platform provides:
+---
 
-Easy salon discovery
-Modern and elegant user experience
-Premium bridal-focused branding
-Mobile-friendly responsive design
-Seamless browsing experience
-High-quality visual presentation
-🚀 Features
-👰 Bridal Beauty Marketplace
+## ✨ Enter Noor & Knot
 
-Browse premium bridal salons and beauty services across Delhi.
+A **centralized bridal beauty marketplace** where Delhi brides can discover, explore, and connect with premium beauty professionals — all in one elegant platform.
 
-🔍 Smart Discovery
+No more hopping between tabs. No more guessing games. Just your dream look, one click away. 💄
 
-Find salons and beauty providers based on preferences and requirements.
+---
 
-🎨 Luxury User Interface
+## 🚀 Features
 
-Elegant and visually appealing design inspired by modern bridal aesthetics.
+| Feature | What it means for you |
+|---|---|
+| 👰 **Bridal Marketplace** | Browse Delhi's finest salons & makeup artists |
+| 🔍 **Smart Discovery** | Find exactly what you need, based on your preferences |
+| 🎨 **Luxury UI** | Because the platform should feel as beautiful as you will |
+| 📱 **Fully Responsive** | Seamless on mobile, tablet, and desktop |
+| 🎥 **Rich Media** | Visual & video content so you know what you're booking |
+| ⚡ **Fast & Lightweight** | No lag. No frustration. Just speed. |
 
-📱 Responsive Design
+---
 
-Optimized for desktop, tablet, and mobile devices.
+## 🛠️ Tech Stack
 
-🎥 Rich Media Experience
+Frontend    →   HTML5 · CSS3 · JavaScript
 
-Integrated visual and video content for enhanced user engagement.
+Backend     →   Node.js · Express.js
 
-⚡ Fast Performance
+Deployment  →   Vercel · GitHub
 
-Lightweight static deployment ensuring quick loading speeds.
+Dev Tools   →   VS Code · Git
 
-🛠️ Tech Stack
-Frontend
-HTML5
-CSS3
-JavaScript
-Backend
-Node.js
-Express.js
-Deployment
-GitHub
-Netlify
-Development Tools
-VS Code
-Git
-GitHub
-🌟 Future Scope
-AI-powered salon recommendations
-Real-time appointment booking
-Secure online payments
-Customer reviews and ratings
-Vendor dashboard
-Personalized bridal packages
-AI beauty consultation assistant
-👥 Team Avengers
-Team Name
+---
 
-Avengers
+## 🌟 What's Coming Next
 
-Team Members
-Tiya Garg
-Vidhi Garg
-📷 Project Preview
+We're just getting started. The roadmap ahead:
 
-Noor & Knot delivers a premium digital experience for brides looking for trusted beauty and salon services in Delhi, combining elegant design with modern marketplace functionality.
+- 🤖 AI-powered salon recommendations
+- 📅 Real-time appointment booking
+- 💳 Secure online payments
+- ⭐ Customer reviews & verified ratings
+- 🧑‍💼 Vendor dashboard for beauty professionals
+- 💌 Personalized bridal packages
+- 🪞 AI beauty consultation assistant
 
-🎯 Buildathon Submission
+---
 
-Challenge: AI Startup Buildathon 2026 – Beauty Salon Marketplace Challenge
+## 👥 Team Avengers
 
-Selected City: Delhi
+Built with late nights, endless iterations, and a lot of heart 💪
 
-Category: Delhi Bridal Beauty Booking Platform
+| Name | Role |
+|---|---|
+| **Tiya Garg** | Full Stack Developer & Designer |
+| **Vidhi Garg** | Full Stack Developer & Designer |
 
-Project: Noor & Knot
+---
+
+## 🎯 Buildathon Submission
+
+> **Challenge:** AI Startup Buildathon 2026 – Beauty Salon Marketplace Challenge
+> **City:** Delhi
+> **Category:** Bridal Beauty Booking Platform
+> **Status:** Successfully Designed, Developed & Deployed ✅
+
+---
+
+<div align="center">
+
+### If Noor & Knot resonated with you — drop a ⭐ on the repo!
+*It means the world to two developers who built this from scratch.*
+
+[![Star on GitHub](https://img.shields.io/github/stars/noor-knot/Noor-Knot?style=social)](https://github.com/noor-knot/Noor-Knot)
+
+**Made with 💗 in India, for Indian Brides**
+
+</div>
+
 
 Status: Successfully Designed, Developed & Deployed ✅
 
